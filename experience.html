@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience - Brandon Sosa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            min-height: 100vh;
+            color: #e2e8f0;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #64ffda;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #cbd5e1;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(100, 255, 218, 0.1);
+            color: #64ffda;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #cbd5e1;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 6rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+            padding-bottom: 4rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            color: #f1f5f9;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #64ffda;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* Certifications Grid */
+        .certifications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .certification-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .certification-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(100, 255, 218, 0.15);
+            border-color: rgba(100, 255, 218, 0.4);
+        }
+
+        .cert-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cert-logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #64ffda 0%, #4dd0e1 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #0f172a;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.3);
+            flex-shrink: 0;
+        }
+
+        .cert-info {
+            flex: 1;
+        }
+
+        .cert-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 0.5rem;
+        }
+
+        .cert-institution {
+            color: #64ffda;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cert-duration {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .cert-description {
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .cert-highlights {
+            list-style: none;
+            padding: 0;
+        }
+
+        .cert-highlights li {
+            color: #cbd5e1;
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .cert-highlights li:before {
+            content: "▶";
+            color: #64ffda;
+            position: absolute;
+            left: 0;
+            font-size: 0.8rem;
+        }
+
+        .cert-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(100, 255, 218, 0.2);
+            color: #64ffda;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid rgba(100, 255, 218, 0.3);
+        }
+
+        /* Timeline for Associations */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline:before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #64ffda, #4dd0e1);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .timeline-content {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            position: relative;
+            width: 45%;
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 0;
+            margin-right: auto;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            top: 2rem;
+            width: 20px;
+            height: 20px;
+            background: #64ffda;
+            border: 4px solid #0f172a;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .timeline-date {
+            color: #64ffda;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-org {
+            color: #cbd5e1;
+            font-weight: 500;
+        }
+
+        /* Coursework Highlight */
+        .coursework-highlight {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .coursework-title {
+            font-size: 1.5rem;
+            color: #64ffda;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .coursework-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .coursework-item {
+            background: rgba(100, 255, 218, 0.1);
+            color: #cbd5e1;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .coursework-item:hover {
+            background: rgba(100, 255, 218, 0.15);
+            color: #64ffda;
+            transform: translateY(-2px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(15, 23, 42, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 2rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                border-top: 1px solid rgba(148, 163, 184, 0.2);
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .certifications-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .main-content {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            /* Timeline Mobile */
+            .timeline:before {
+                left: 2rem;
+            }
+
+            .timeline-content {
+                width: calc(100% - 4rem);
+                margin-left: 4rem !important;
+                margin-right: 0 !important;
+            }
+
+            .timeline-marker {
+                left: 2rem;
+            }
+
+            .coursework-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .certification-card {
+                padding: 1.5rem;
+            }
+            
+            .cert-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Brandon Sosa</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="#" class="active">Experience</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">☰</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <section class="page-header">
+            <h1>Experience & Certifications</h1>
+            <p>Continuous learning through hands-on certifications and active participation in academic organizations, building expertise in full-stack development and advanced Python programming.</p>
+        </section>
+
+        <!-- Certifications Section -->
+        <section class="section">
+            <h2 class="section-title">Professional Certifications</h2>
+            <div class="certifications-grid">
+                <!-- Full Stack Development Certificate -->
+                <div class="certification-card" style="animation-delay: 0.2s;">
+                    <div class="cert-badge">In Progress</div>
+                    <div class="cert-header">
+                        <div class="cert-logo">UH</div>
+                        <div class="cert-info">
+                            <h3 class="cert-title">Full Stack Development Certificate</h3>
+                            <p class="cert-institution">University of Helsinki</p>
+                            <p class="cert-duration">June 2024 – January 2025</p>
+                        </div>
+                    </div>
+                    <p class="cert-description">
+                        Comprehensive full-stack development program focusing on modern web technologies, database design, and scalable application architecture.
+                    </p>
+                    <ul class="cert-highlights">
+                        <li>Designed and implemented normalized SQL Server schema for 10 years of Spotify data</li>
+                        <li>Developed automated ETL workflows using Python and pandas</li>
+                        <li>Built refresh-ready datasets for Excel dashboards and analytics</li>
+                        <li>Applied modern full-stack development practices and patterns</li>
+                    </ul>
+                </div>
+
+                <!-- Advanced Python Certificate -->
+                <div class="certification-card" style="animation-delay: 0.4s;">
+                    <div class="cert-badge">In Progress</div>
+                    <div class="cert-header">
+                        <div class="cert-logo">UH</div>
+                        <div class="cert-info">
+                            <h3 class="cert-title">Advanced Python Certificate</h3>
+                            <p class="cert-institution">University of Helsinki</p>
+                            <p class="cert-duration">June 2024 – January 2025</p>
+                        </div>
+                    </div>
+                    <p class="cert-description">
+                        Intensive 90+ hour program with hands-on Python coding challenges and real-world project implementations.
+                    </p>
+                    <ul class="cert-highlights">
+                        <li>90+ hours of hands-on training with embedded coding challenges</li>
+                        <li>Applied experience in machine learning and data analysis</li>
+                        <li>Statistical analysis and data wrangling techniques</li>
+                        <li>Real-world project development and implementation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Academic Involvement -->
+        <section class="section">
+            <h2 class="section-title">Academic Involvement</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">January 2025 – Present</div>
+                        <h3 class="timeline-title">Member</h3>
+                        <p class="timeline-org">Artificial Intelligence Club, SDSU</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Relevant Coursework -->
+        <section class="section">
+            <div class="coursework-highlight">
+                <h2 class="coursework-title">Relevant Coursework</h2>
+                <p style="color: #cbd5e1; margin-bottom: 0;">Building a strong foundation in computer science fundamentals and cutting-edge technologies</p>
+                <div class="coursework-grid">
+                    <div class="coursework-item">Artificial Intelligence</div>
+                    <div class="coursework-item">Machine Learning</div>
+                    <div class="coursework-item">Data Structures & Algorithms</div>
+                    <div class="coursework-item">Operating Systems</div>
+                    <div class="coursework-item">Full Stack Development</div>
+                    <div class="coursework-item">Databases</div>
+                    <div class="coursework-item">Statistics</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Smooth scroll effect for nav
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(15, 23, 42, 0.98)';
+            } else {
+                nav.style.background = 'rgba(15, 23, 42, 0.95)';
+            }
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('nav')) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Animate cards on scroll
+        const cards = document.querySelectorAll('.certification-card, .timeline-item, .coursework-highlight');
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        cards.forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

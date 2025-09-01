@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Brandon Sosa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            min-height: 100vh;
+            color: #e2e8f0;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #64ffda;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #cbd5e1;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(100, 255, 218, 0.1);
+            color: #64ffda;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #cbd5e1;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 6rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+            padding-bottom: 4rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            color: #f1f5f9;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .project-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            border-radius: 20px;
+            padding: 0;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            position: relative;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(100, 255, 218, 0.15);
+            border-color: rgba(100, 255, 218, 0.4);
+        }
+
+        .project-header {
+            padding: 2rem 2rem 1rem 2rem;
+            position: relative;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.05);
+        }
+
+        .project-placeholder {
+            color: #64ffda;
+            font-size: 3rem;
+            opacity: 0.3;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-subtitle {
+            color: #64ffda;
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .project-description {
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-tag {
+            background: rgba(100, 255, 218, 0.1);
+            color: #64ffda;
+            padding: 0.3rem 0.7rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            font-weight: 500;
+        }
+
+        .project-actions {
+            padding: 0 2rem 2rem 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .project-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #64ffda 0%, #4dd0e1 100%);
+            color: #0f172a;
+            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(100, 255, 218, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(30, 41, 59, 0.8);
+            color: #64ffda;
+            border: 2px solid rgba(100, 255, 218, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(30, 41, 59, 0.9);
+            border-color: #64ffda;
+            transform: translateY(-2px);
+        }
+
+        .btn-tertiary {
+            background: rgba(148, 163, 184, 0.1);
+            color: #cbd5e1;
+            border: 2px solid rgba(148, 163, 184, 0.3);
+        }
+
+        .btn-tertiary:hover {
+            background: rgba(148, 163, 184, 0.2);
+            color: #f1f5f9;
+            border-color: #94a3b8;
+            transform: translateY(-2px);
+        }
+
+        /* Project Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 2rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(30, 41, 59, 0.95);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: #cbd5e1;
+            font-size: 2rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(100, 255, 218, 0.1);
+            color: #64ffda;
+        }
+
+        .modal h3 {
+            color: #64ffda;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal p {
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .modal .tech-stack {
+            margin: 1rem 0;
+        }
+
+        /* Featured badge */
+        .featured-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, #64ffda 0%, #4dd0e1 100%);
+            color: #0f172a;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(15, 23, 42, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 2rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                border-top: 1px solid rgba(148, 163, 184, 0.2);
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .main-content {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .modal {
+                padding: 1rem;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Brandon Sosa</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="#" class="active">Projects</a></li>
+                <li><a href="experience.html">Experience</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">☰</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <section class="page-header">
+            <h1>My Projects</h1>
+            <p>A collection of full-stack applications showcasing AI integration, data analysis, and modern web development. Each project demonstrates real-world problem-solving and technical expertise.</p>
+        </section>
+
+        <!-- Projects Grid -->
+        <div class="projects-grid">
+            <!-- BrieflyGlobal Project -->
+            <div class="project-card" style="animation-delay: 0.2s;">
+                <div class="featured-badge">Featured</div>
+                <div class="project-image">
+                    <!-- Replace this src with your actual project image -->
+                    <img src="https://via.placeholder.com/600x200/1e293b/64ffda?text=BrieflyGlobal+Screenshot" alt="BrieflyGlobal Project Screenshot" onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=\'project-placeholder\'>Project Image</div>'">
+                </div>
+                <div class="project-header">
+                    <h3 class="project-title">BrieflyGlobal</h3>
+                    <p class="project-subtitle">World Intelligence Platform</p>
+                    <p class="project-description">
+                        A comprehensive geopolitical intelligence platform featuring an interactive world map that integrates real-time economic data and news feeds. Built with AI-powered sentiment analysis and bias detection to provide automated insights into global events.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">NLTK</span>
+                    </div>
+                </div>
+                <div class="project-actions">
+                    <a href="#" class="project-btn btn-primary" onclick="openModal('brieflyglobal')">
+                        Live Demo
+                    </a>
+                    <a href="#" class="project-btn btn-secondary">
+                        API Docs
+                    </a>
+                    <a href="#" class="project-btn btn-tertiary">
+                        GitHub
+                    </a>
+                </div>
+            </div>
+
+            <!-- DietRx Enhanced Project -->
+            <div class="project-card" style="animation-delay: 0.4s;">
+                <div class="project-image">
+                    <!-- Replace this src with your actual project image -->
+                    <img src="https://via.placeholder.com/600x200/1e293b/64ffda?text=DietRx+Enhanced+Screenshot" alt="DietRx Enhanced Project Screenshot" onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=\'project-placeholder\'>Project Image</div>'">
+                </div>
+                <div class="project-header">
+                    <h3 class="project-title">DietRx Enhanced</h3>
+                    <p class="project-subtitle">Drug-Food Interaction Analysis Platform</p>
+                    <p class="project-description">
+                        A clinical decision support system that integrates FDA OpenFDA data with AI-enhanced analysis to identify and classify drug-food interactions. Features professional PDF reporting and interactive analytics dashboards.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Streamlit</span>
+                        <span class="tech-tag">SQLite</span>
+                        <span class="tech-tag">Plotly</span>
+                        <span class="tech-tag">FDA API</span>
+                    </div>
+                </div>
+                <div class="project-actions">
+                    <a href="#" class="project-btn btn-primary" onclick="openModal('dietrx')">
+                        Streamlit App
+                    </a>
+                    <a href="#" class="project-btn btn-tertiary">
+                        GitHub
+                    </a>
+                </div>
+            </div>
+
+            <!-- BeInformed Project -->
+            <div class="project-card" style="animation-delay: 0.6s;">
+                <div class="project-image">
+                    <!-- Replace this src with your actual project image -->
+                    <img src="https://via.placeholder.com/600x200/1e293b/64ffda?text=BeInformed+Screenshot" alt="BeInformed Project Screenshot" onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=\'project-placeholder\'>Project Image</div>'">
+                </div>
+                <div class="project-header">
+                    <h3 class="project-title">BeInformed</h3>
+                    <p class="project-subtitle">Media Bias & Sentiment Analysis Platform</p>
+                    <p class="project-description">
+                        A full-stack application that analyzes news articles for sentiment, political bias, and factual reporting using advanced NLP models. Helps users compare perspectives across different news sources with interactive visualizations.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">NLP</span>
+                        <span class="tech-tag">Supabase</span>
+                    </div>
+                </div>
+                <div class="project-actions">
+                    <a href="#" class="project-btn btn-primary" onclick="openModal('beinformed')">
+                        Live Demo
+                    </a>
+                    <a href="#" class="project-btn btn-secondary">
+                        API Docs
+                    </a>
+                    <a href="#" class="project-btn btn-tertiary">
+                        GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Project Modals -->
+    <div class="modal" id="modal-brieflyglobal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h3>BrieflyGlobal - Technical Deep Dive</h3>
+            <p><strong>Challenge:</strong> Creating a comprehensive platform that combines real-time economic data with news intelligence to provide actionable geopolitical insights.</p>
+            
+            <p><strong>Solution:</strong> Built a full-stack application with an interactive world map interface that aggregates data from World Bank and ExchangeRate APIs, then processes news feeds through custom NLP pipelines for sentiment analysis, bias detection, and automated summarization.</p>
+            
+            <p><strong>Key Features:</strong></p>
+            <p>• Interactive country-level dashboards with economic indicators<br>
+            • Real-time news feed integration with AI-powered analysis<br>
+            • Sentiment and bias detection using NLTK and custom ML models<br>
+            • Automated summarization for quick intelligence insights<br>
+            • Docker containerization for scalable deployment</p>
+            
+            <div class="tech-stack">
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">TypeScript</span>
+                <span class="tech-tag">FastAPI</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">Docker</span>
+                <span class="tech-tag">NLTK</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-dietrx">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h3>DietRx Enhanced - Technical Deep Dive</h3>
+            <p><strong>Challenge:</strong> Healthcare professionals need quick access to drug-food interaction data with clinical evidence and professional reporting capabilities.</p>
+            
+            <p><strong>Solution:</strong> Developed a clinical decision support system that integrates FDA OpenFDA API data with AI-enhanced analysis to identify, classify, and report on drug-food interactions with healthcare-grade precision.</p>
+            
+            <p><strong>Key Features:</strong></p>
+            <p>• FDA OpenFDA data integration for comprehensive drug information<br>
+            • AI-enhanced analysis for interaction classification<br>
+            • Interactive analytics dashboards with clinical visualizations<br>
+            • Professional PDF report generation<br>
+            • Clinical evidence linking and documentation</p>
+            
+            <div class="tech-stack">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Streamlit</span>
+                <span class="tech-tag">SQLite</span>
+                <span class="tech-tag">Plotly</span>
+                <span class="tech-tag">FDA API</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-beinformed">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h3>BeInformed - Technical Deep Dive</h3>
+            <p><strong>Challenge:</strong> In today's media landscape, users need tools to understand bias and sentiment across different news sources to make informed decisions.</p>
+            
+            <p><strong>Solution:</strong> Created a full-stack platform that uses advanced NLP models to analyze news articles for sentiment, political bias, and factual reporting, presenting comparative analysis through interactive visualizations.</p>
+            
+            <p><strong>Key Features:</strong></p>
+            <p>• Multi-source news article analysis and comparison<br>
+            • Advanced NLP models for sentiment and bias detection<br>
+            • Interactive React + TypeScript frontend<br>
+            • Scalable FastAPI + PostgreSQL backend via Supabase<br>
+            • Structured reporting and comparative analysis tools</p>
+            
+            <div class="tech-stack">
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">TypeScript</span>
+                <span class="tech-tag">FastAPI</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">NLP</span>
+                <span class="tech-tag">Supabase</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Smooth scroll effect for nav
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(15, 23, 42, 0.98)';
+            } else {
+                nav.style.background = 'rgba(15, 23, 42, 0.95)';
+            }
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('nav')) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Modal functions
+        function openModal(projectId) {
+            const modal = document.getElementById(`modal-${projectId}`);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                modal.classList.remove('active');
+            });
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+        });
+
+        // Close modal with escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Animate project cards on scroll
+        const projectCards = document.querySelectorAll('.project-card');
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        projectCards.forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
