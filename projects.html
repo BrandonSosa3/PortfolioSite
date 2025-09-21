@@ -105,15 +105,40 @@
             line-height: 1.6;
         }
 
-        /* Projects Grid */
+        /* Projects Grid - Horizontal Scrolling Gallery */
         .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            display: flex;
             gap: 2rem;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
+            padding: 2rem 0;
             margin-bottom: 3rem;
+            scroll-snap-type: x mandatory;
+        }
+
+        .projects-grid::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .projects-grid::-webkit-scrollbar-track {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 10px;
+        }
+
+        .projects-grid::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #64ffda 0%, #4dd0e1 100%);
+            border-radius: 10px;
+        }
+
+        .projects-grid::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #4dd0e1 0%, #64ffda 100%);
         }
 
         .project-card {
+            min-width: 450px;
+            max-width: 450px;
+            scroll-snap-align: center;
             background: rgba(30, 41, 59, 0.5);
             border: 1px solid rgba(100, 255, 218, 0.2);
             border-radius: 20px;
@@ -410,8 +435,9 @@
                 display: block;
             }
 
-            .projects-grid {
-                grid-template-columns: 1fr;
+            .project-card {
+                min-width: 90vw;
+                max-width: 90vw;
             }
 
             .main-content {
@@ -459,8 +485,74 @@
 
         <!-- Projects Grid -->
         <div class="projects-grid">
-            <!-- Bike Share Demand Forecasting Project - NEW -->
+            <!-- BrieflyGlobal Project - FIRST -->
             <div class="project-card" style="animation-delay: 0.2s;">
+                <div class="featured-badge">Featured</div>
+                <div class="project-image">
+                    <img src="images/Briefly1.png" alt="BrieflyGlobal Project Screenshot">
+                </div>
+                <div class="project-header">
+                    <h3 class="project-title">BrieflyGlobal</h3>
+                    <p class="project-subtitle">World Intelligence Platform</p>
+                    <p class="project-description">
+                        A comprehensive geopolitical intelligence platform featuring an interactive world map that integrates real-time economic data and news feeds. Built with AI-powered sentiment analysis and bias detection to provide automated insights into global events.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">NLTK</span>
+                    </div>
+                </div>
+                <div class="project-actions">
+                    <a href="https://briefly-global.vercel.app" class="project-btn btn-primary" target="_blank" rel="noopener noreferrer">
+                        Live Demo
+                    </a>
+                    <a href="https://github.com/BrandonSosa3/BrieflyGlobal" class="project-btn btn-tertiary" target="_blank" rel="noopener noreferrer">
+                        GitHub
+                    </a>
+                    <button class="project-btn" style="background: rgba(148, 163, 184, 0.1); color: #cbd5e1; border: 2px solid rgba(148, 163, 184, 0.3);" onclick="openModal('brieflyglobal')">
+                        More Details
+                    </button>
+                </div>
+            </div>
+
+            <!-- DietRx Enhanced Project - SECOND -->
+            <div class="project-card" style="animation-delay: 0.4s;">
+                <div class="project-image">
+                    <img src="images/Diet.png" alt="DietRx Project Screenshot">
+                </div>
+                <div class="project-header">
+                    <h3 class="project-title">DietRx Enhanced</h3>
+                    <p class="project-subtitle">Drug-Food Interaction Analysis Platform</p>
+                    <p class="project-description">
+                        A clinical decision support system that integrates FDA OpenFDA data with AI-enhanced analysis to identify and classify drug-food interactions. Features professional PDF reporting and interactive analytics dashboards.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Streamlit</span>
+                        <span class="tech-tag">SQLite</span>
+                        <span class="tech-tag">Plotly</span>
+                        <span class="tech-tag">FDA API</span>
+                    </div>
+                </div>
+                <div class="project-actions">
+                    <a href="https://dietrx-20.streamlit.app" class="project-btn btn-primary" target="_blank" rel="noopener noreferrer">
+                        Streamlit App
+                    </a>
+                    <a href="https://github.com/BrandonSosa3/DietRx-2.0" class="project-btn btn-tertiary" target="_blank" rel="noopener noreferrer">
+                        GitHub
+                    </a>
+                    <button class="project-btn" style="background: rgba(148, 163, 184, 0.1); color: #cbd5e1; border: 2px solid rgba(148, 163, 184, 0.3);" onclick="openModal('dietrx')">
+                        More Details
+                    </button>
+                </div>
+            </div>
+
+            <!-- Bike Share Demand Forecasting Project - THIRD -->
+            <div class="project-card" style="animation-delay: 0.6s;">
                 <div class="new-badge">New</div>
                 <div class="project-image">
                     <!-- Replace this src with your actual project image if you have one -->
@@ -494,74 +586,8 @@
                 </div>
             </div>
 
-            <!-- BrieflyGlobal Project -->
-            <div class="project-card" style="animation-delay: 0.3s;">
-                <div class="featured-badge">Featured</div>
-                <div class="project-image">
-                    <img src="images/Briefly1.png" alt="BrieflyGlobal Project Screenshot">
-                </div>
-                <div class="project-header">
-                    <h3 class="project-title">BrieflyGlobal</h3>
-                    <p class="project-subtitle">World Intelligence Platform</p>
-                    <p class="project-description">
-                        A comprehensive geopolitical intelligence platform featuring an interactive world map that integrates real-time economic data and news feeds. Built with AI-powered sentiment analysis and bias detection to provide automated insights into global events.
-                    </p>
-                    <div class="tech-stack">
-                        <span class="tech-tag">React</span>
-                        <span class="tech-tag">TypeScript</span>
-                        <span class="tech-tag">FastAPI</span>
-                        <span class="tech-tag">PostgreSQL</span>
-                        <span class="tech-tag">Docker</span>
-                        <span class="tech-tag">NLTK</span>
-                    </div>
-                </div>
-                <div class="project-actions">
-                    <a href="https://briefly-global.vercel.app" class="project-btn btn-primary" target="_blank" rel="noopener noreferrer">
-                        Live Demo
-                    </a>
-                    <a href="https://github.com/BrandonSosa3/BrieflyGlobal" class="project-btn btn-tertiary" target="_blank" rel="noopener noreferrer">
-                        GitHub
-                    </a>
-                    <button class="project-btn" style="background: rgba(148, 163, 184, 0.1); color: #cbd5e1; border: 2px solid rgba(148, 163, 184, 0.3);" onclick="openModal('brieflyglobal')">
-                        More Details
-                    </button>
-                </div>
-            </div>
-
-            <!-- DietRx Enhanced Project -->
-            <div class="project-card" style="animation-delay: 0.5s;">
-                <div class="project-image">
-                    <img src="images/Diet.png" alt="DietRx Project Screenshot">
-                </div>
-                <div class="project-header">
-                    <h3 class="project-title">DietRx Enhanced</h3>
-                    <p class="project-subtitle">Drug-Food Interaction Analysis Platform</p>
-                    <p class="project-description">
-                        A clinical decision support system that integrates FDA OpenFDA data with AI-enhanced analysis to identify and classify drug-food interactions. Features professional PDF reporting and interactive analytics dashboards.
-                    </p>
-                    <div class="tech-stack">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">Streamlit</span>
-                        <span class="tech-tag">SQLite</span>
-                        <span class="tech-tag">Plotly</span>
-                        <span class="tech-tag">FDA API</span>
-                    </div>
-                </div>
-                <div class="project-actions">
-                    <a href="https://dietrx-20.streamlit.app" class="project-btn btn-primary" target="_blank" rel="noopener noreferrer">
-                        Streamlit App
-                    </a>
-                    <a href="https://github.com/BrandonSosa3/DietRx-2.0" class="project-btn btn-tertiary" target="_blank" rel="noopener noreferrer">
-                        GitHub
-                    </a>
-                    <button class="project-btn" style="background: rgba(148, 163, 184, 0.1); color: #cbd5e1; border: 2px solid rgba(148, 163, 184, 0.3);" onclick="openModal('dietrx')">
-                        More Details
-                    </button>
-                </div>
-            </div>
-
-            <!-- BeInformed Project -->
-            <div class="project-card" style="animation-delay: 0.7s;">
+            <!-- BeInformed Project - FOURTH/LAST -->
+            <div class="project-card" style="animation-delay: 0.8s;">
                 <div class="project-image">
                     <img src="images/Informed.png" alt="BeInformed Project Screenshot">
                 </div>
