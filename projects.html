@@ -484,9 +484,43 @@
         </section>
 
         <!-- Projects Grid -->
+        <!-- CoLiv Project - FIRST (FEATURED) -->
+        <div class="project-card" style="animation-delay: 0.2s;">
+            <div class="featured-badge">Featured</div>
+            <div class="project-image">
+                <img src="images/coliv.png" alt="CoLiv Platform Screenshot" onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=\'project-placeholder\'>CoLiv</div>'">
+            </div>
+            <div class="project-header">
+                <h3 class="project-title">CoLiv</h3>
+                <p class="project-subtitle">Co-Living Property Management Platform</p>
+                <p class="project-description">
+                    A comprehensive dual-portal system for co-living operators and tenants, featuring room-level management with individual pricing, tenant profiles, and an AI-powered roommate matching algorithm. Tracks properties, units, and rooms with full operational visibility.
+                </p>
+                <div class="tech-stack">
+                    <span class="tech-tag">React</span>
+                    <span class="tech-tag">TypeScript</span>
+                    <span class="tech-tag">Next.js</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">Supabase</span>
+                    <span class="tech-tag">AI/ML</span>
+                </div>
+            </div>
+            <div class="project-actions">
+                <a href="https://co-liv.vercel.app" class="project-btn btn-primary" target="_blank" rel="noopener noreferrer">
+                    Operator Portal
+                </a>
+                <a href="https://co-liv-tenant.vercel.app" class="project-btn btn-primary" target="_blank" rel="noopener noreferrer">
+                    Tenant Portal
+                </a>
+                <button class="project-btn" style="background: rgba(148, 163, 184, 0.1); color: #cbd5e1; border: 2px solid rgba(148, 163, 184, 0.3);" onclick="openModal('coliv')">
+                    More Details
+                </button>
+            </div>
+        </div>
+
         <div class="projects-grid">
             <!-- BrieflyGlobal Project - FIRST -->
-            <div class="project-card" style="animation-delay: 0.2s;">
+            <div class="project-card" style="animation-delay: 0.3s;">
                 <div class="featured-badge">Featured</div>
                 <div class="project-image">
                     <img src="images/Briefly1.png" alt="BrieflyGlobal Project Screenshot">
@@ -728,6 +762,51 @@
                 <span class="tech-tag">PostgreSQL</span>
                 <span class="tech-tag">NLP</span>
                 <span class="tech-tag">Supabase</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- CoLiv Modal -->
+    <div class="modal" id="modal-coliv">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h3>CoLiv - Technical Deep Dive</h3>
+            <p><strong>Challenge:</strong> Traditional property management systems track properties at the unit level, but co-living spaces require room-level granularity with individual pricing, tenant profiles, and roommate compatibility matching.</p>
+            
+            <p><strong>Solution:</strong> Built a dual-portal system with separate interfaces for operators and tenants, featuring room-level tracking, individual pricing management, and an AI-powered roommate matching algorithm currently in development.</p>
+            
+            <p><strong>System Architecture:</strong></p>
+            <p>• <strong>Operator Portal:</strong> Full property management from properties → units → rooms → tenants<br>
+            • <strong>Tenant Portal:</strong> Personal dashboard with room details, payments, and roommate information<br>
+            • <strong>Room-Level Tracking:</strong> Each room has individual pricing, size specifications, and tenant profiles<br>
+            • <strong>AI Roommate Matcher:</strong> Algorithm in development for lifestyle-based compatibility matching</p>
+            
+            <p><strong>User Workflow:</strong></p>
+            <p><strong>Operator Side:</strong><br>
+            1. Create operator account at co-liv.vercel.app<br>
+            2. Add property with address and details<br>
+            3. Create units within the property<br>
+            4. Define rooms with pricing and specifications<br>
+            5. Add tenants with credentials<br>
+            6. Monitor occupancy and manage operations</p>
+            
+            <p><strong>Tenant Side:</strong><br>
+            1. Receive credentials from operator<br>
+            2. Login at co-liv-tenant.vercel.app<br>
+            3. View room details and amenities<br>
+            4. Access payment information<br>
+            5. Connect with roommates<br>
+            6. Submit maintenance requests</p>
+            
+            <p><strong>Key Differentiator:</strong> Unlike competitors that stop at unit-level management, CoLiv provides granular room-level control, giving operators complete visibility and flexibility across their co-living properties.</p>
+            
+            <div class="tech-stack">
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">TypeScript</span>
+                <span class="tech-tag">Next.js</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">Supabase</span>
+                <span class="tech-tag">AI/ML</span>
             </div>
         </div>
     </div>
