@@ -340,6 +340,140 @@
             transform: translateY(-2px);
         }
 
+        /* Work Experience */
+        .work-experience-card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-left: 5px solid #fbbf24;
+            border-radius: 20px;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            animation: fadeInUp 0.8s ease-out;
+            box-shadow: 0 4px 25px rgba(251, 191, 36, 0.1);
+        }
+
+        .work-experience-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 45px rgba(251, 191, 36, 0.2);
+            border-color: rgba(251, 191, 36, 0.55);
+        }
+
+        .work-badge-current {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+            color: #0f172a;
+            padding: 0.35rem 0.9rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .work-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .work-logo {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: #0f172a;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.35);
+            flex-shrink: 0;
+            letter-spacing: -0.03em;
+        }
+
+        .work-info { flex: 1; }
+
+        .work-title {
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 0.35rem;
+        }
+
+        .work-company {
+            color: #fbbf24;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .work-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .work-date {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .work-separator { color: #475569; font-size: 0.9rem; }
+
+        .work-location {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .work-bullets {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1.75rem;
+        }
+
+        .work-bullets li {
+            color: #cbd5e1;
+            line-height: 1.65;
+            margin-bottom: 0.9rem;
+            padding-left: 1.25rem;
+            position: relative;
+        }
+
+        .work-bullets li:before {
+            content: "▶";
+            color: #fbbf24;
+            position: absolute;
+            left: 0;
+            font-size: 0.75rem;
+            top: 0.2rem;
+        }
+
+        .work-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .work-skill-tag {
+            background: rgba(251, 191, 36, 0.1);
+            color: #fbbf24;
+            padding: 0.3rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(251, 191, 36, 0.25);
+            font-weight: 500;
+        }
+
+        .work-section-title {
+            color: #fbbf24 !important;
+        }
+
         /* Animations */
         @keyframes fadeInUp {
             from {
@@ -434,7 +568,7 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="projects.html">Projects</a></li>
-                <li><a href="#" class="active">Certifications</a></li>
+                <li><a href="#" class="active">Experience</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
             <button class="mobile-menu-toggle">☰</button>
@@ -445,8 +579,41 @@
     <main class="main-content">
         <!-- Page Header -->
         <section class="page-header">
-            <h1>Certifications</h1>
-            <p>Continuous learning through hands-on certifications and active participation in academic organizations.</p>
+            <h1>Experience</h1>
+            <p>Professional work experience, certifications, and academic involvement that complement my software engineering background.</p>
+        </section>
+
+        <!-- Work Experience Section -->
+        <section class="section">
+            <h2 class="section-title work-section-title">Work Experience</h2>
+            <div class="work-experience-card">
+                <div class="work-badge-current">Current</div>
+                <div class="work-header">
+                    <div class="work-logo">OCM</div>
+                    <div class="work-info">
+                        <h3 class="work-title">Wealth and Portfolio Management Intern</h3>
+                        <p class="work-company">One Capital Management, LLC · Internship</p>
+                        <div class="work-meta">
+                            <span class="work-date">May 2026 – August 2026</span>
+                            <span class="work-separator">·</span>
+                            <span class="work-location">Westlake Village, California · On-site</span>
+                        </div>
+                    </div>
+                </div>
+                <ul class="work-bullets">
+                    <li>Partnered with Portfolio and Wealth Management teams to build data-driven, multi-phase financial plans for high-net-worth and institutional clients, leveraging Bloomberg Terminal analytics and quantitative factor models to tailor investment strategies to each client's risk profile and long-term objectives</li>
+                    <li>Conducted quantitative research and valuation of emerging equities using Bloomberg data feeds and Python-based DCF and comparables models, translating analytical outputs into structured asset allocation recommendations that guided long-term portfolio construction decisions</li>
+                    <li>Built automated Excel dashboard templates that aggregated Bloomberg portfolio metrics into structured, refresh-ready data pipelines, then distilled outputs into client-facing presentations delivering actionable insights calibrated to each client's level of financial sophistication</li>
+                </ul>
+                <div class="work-skills">
+                    <span class="work-skill-tag">Bloomberg Terminal</span>
+                    <span class="work-skill-tag">Python</span>
+                    <span class="work-skill-tag">Financial Modeling</span>
+                    <span class="work-skill-tag">Portfolio Management</span>
+                    <span class="work-skill-tag">Data Analysis</span>
+                    <span class="work-skill-tag">Excel / VBA</span>
+                </div>
+            </div>
         </section>
 
         <!-- Certifications Section -->
@@ -559,7 +726,7 @@
         });
 
         // Animate cards on scroll
-        const cards = document.querySelectorAll('.certification-card, .timeline-item, .coursework-highlight');
+        const cards = document.querySelectorAll('.certification-card, .timeline-item, .coursework-highlight, .work-experience-card');
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'

@@ -485,7 +485,39 @@
 
         <!-- Projects Grid -->
         <div class="projects-grid">
-                    <!-- CoLiv Project - FIRST (FEATURED) -->
+            <!-- Regulist Project - FIRST (FEATURED) -->
+            <div class="project-card" style="animation-delay: 0.1s;">
+                <div class="featured-badge">Featured</div>
+                <div class="project-image">
+                    <img src="images/Regulist.png" alt="Regulist Platform Screenshot" onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=\'project-placeholder\'>Regulist</div>'">
+                </div>
+                <div class="project-header">
+                    <h3 class="project-title">Regulist</h3>
+                    <p class="project-subtitle">B2B Freelance Marketplace Platform</p>
+                    <p class="project-description">
+                        A full-stack B2B marketplace with dual buyer/seller portals, a tiered Stripe Connect payout system, and a contract engine supporting one-time, installment, and milestone payment schedules — each with mutual signing workflows, automated billing jobs, and an admin portal with TOTP MFA.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Stripe Connect</span>
+                        <span class="tech-tag">AWS S3</span>
+                        <span class="tech-tag">JWT</span>
+                        <span class="tech-tag">Framer Motion</span>
+                    </div>
+                </div>
+                <div class="project-actions">
+                    <a href="https://www.regulist.net/" class="project-btn btn-primary" target="_blank" rel="noopener noreferrer">
+                        Live Demo
+                    </a>
+                    <button class="project-btn btn-tertiary" onclick="openModal('regulist')">
+                        More Details
+                    </button>
+                </div>
+            </div>
+                    <!-- CoLiv Project - SECOND (FEATURED) -->
             <div class="project-card" style="animation-delay: 0.2s;">
                 <div class="featured-badge">Featured</div>
                 <div class="project-image">
@@ -657,6 +689,52 @@
     </main>
 
     <!-- Project Modals -->
+    <!-- Regulist Modal -->
+    <div class="modal" id="modal-regulist">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h3>Regulist - Technical Deep Dive</h3>
+            <p><strong>Challenge:</strong> Freelance marketplaces typically handle simple one-off payments, but professional service contracts require multi-party signing workflows, flexible payment structures, and enforceable cancellation logic — all without exposing clients to payment processing complexity.</p>
+
+            <p><strong>Solution:</strong> Built a full-stack B2B marketplace with dual buyer/seller portals, a tiered Stripe Connect payout system, and a contract engine supporting three payment schedule types (one-time, installments, milestones) with mutual cancellation and modification flows.</p>
+
+            <p><strong>System Architecture:</strong></p>
+            <p>• <strong>Dual Portal System:</strong> Separate dashboards for buyers (project posting, proposal review, contract signing) and sellers (verification, proposals, portfolio, subscription management)<br>
+            • <strong>Contract Engine:</strong> Three-schedule payment system with per-payment Stripe PaymentIntents, idempotency keys, and status state machines (pending → signed → paid → cancelled)<br>
+            • <strong>Tiered Platform Fee:</strong> Fee rate locked at contract signing time (Free 12% → Elite 6%), stored in the contract record so rate changes never affect active agreements<br>
+            • <strong>APScheduler Jobs:</strong> Automated installment charging, 48-hour advance payment reminders, and overdue milestone alerts — all idempotent with per-row notification flags to prevent duplicate sends<br>
+            • <strong>Admin Portal:</strong> Full audit trail, seller verification queue, manual credit adjustment, analytics, and TOTP-based MFA</p>
+
+            <p><strong>User Workflow:</strong></p>
+            <p><strong>Seller Side:</strong><br>
+            1. Sign up, submit verification documents (uploaded to S3)<br>
+            2. Select subscription tier (Basic / Pro / Elite) once approved<br>
+            3. Browse buyer projects, spend credits to initiate conversations<br>
+            4. Submit proposals with one-time, installment, or milestone payment schedules<br>
+            5. Sign contracts; receive payouts via Stripe Connect with Regulist platform fee deducted</p>
+
+            <p><strong>Buyer Side:</strong><br>
+            1. Sign up, post projects with service types and budget<br>
+            2. Review seller proposals, negotiate via in-app messaging<br>
+            3. Schedule meetings (Zoom / Google Meet) directly in the conversation thread<br>
+            4. Sign contracts; card charged automatically per schedule (one-time on signing, installments on due dates, milestones on approval)<br>
+            5. Rate sellers on Regulist-verified campaigns only (auto-created on payment)</p>
+
+            <p><strong>Key Differentiator:</strong> Unlike standard freelance platforms with single flat payments, Regulist enforces structured contract lifecycle management — proposals require mutual signing before any charge, installment cancellations take effect at the billing period boundary rather than immediately, and milestone submissions are gated on buyer approval before Stripe capture — giving both parties legally consistent, auditable records.</p>
+
+            <div class="tech-stack">
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">TypeScript</span>
+                <span class="tech-tag">FastAPI</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">Stripe Connect</span>
+                <span class="tech-tag">AWS S3</span>
+                <span class="tech-tag">JWT</span>
+                <span class="tech-tag">Framer Motion</span>
+            </div>
+        </div>
+    </div>
+
     <!-- Bike Share Modal -->
     <div class="modal" id="modal-bikeshare">
         <div class="modal-content">
