@@ -229,6 +229,18 @@
             font-weight: 500;
         }
 
+        .project-note {
+            padding: 0 2rem 1rem 2rem;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        .project-note strong {
+            color: #64ffda;
+            font-weight: 600;
+        }
+
         .project-actions {
             padding: 0 2rem 2rem 2rem;
             display: flex;
@@ -517,8 +529,43 @@
                     </button>
                 </div>
             </div>
-                    <!-- CoLiv Project - SECOND (FEATURED) -->
+            <!-- NutritionScanner Project - SECOND (FEATURED) -->
             <div class="project-card" style="animation-delay: 0.2s;">
+                <div class="featured-badge">Featured</div>
+                <div class="project-image">
+                    <img src="images/NutritionScanner.png" alt="NutritionScanner Platform Screenshot" onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=\'project-placeholder\'>NutritionScanner</div>'">
+                </div>
+                <div class="project-header">
+                    <h3 class="project-title">NutritionScanner</h3>
+                    <p class="project-subtitle">Receipt-to-Nutrition Analysis Pipeline</p>
+                    <p class="project-description">
+                        A full-stack pipeline that turns a photographed grocery receipt into structured food and price data, pairing Claude vision extraction with a held-out-evaluated LLM resolver, USDA nutrition lookup, and barcode-level ingredient hazard ratings &mdash; with a permanent correction loop that compounds across receipts, arithmetic reconciliation that flags any basket whose lines don't sum to its printed total, and two-tier spend guards that keep an open-signup deployment from draining a shared API budget.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Claude API</span>
+                        <span class="tech-tag">USDA FoodData Central</span>
+                        <span class="tech-tag">Redis</span>
+                        <span class="tech-tag">Docker</span>
+                    </div>
+                </div>
+                <p class="project-note">
+                    <strong>No signup</strong> &mdash; the sign-in screen has a "Look around the demo" button that opens a real account with real receipts in it.
+                </p>
+                <div class="project-actions">
+                    <a href="https://nutritionscanner-production.up.railway.app/" class="project-btn btn-primary" target="_blank" rel="noopener noreferrer">
+                        Live Demo
+                    </a>
+                    <button class="project-btn btn-tertiary" onclick="openModal('nutritionscanner')">
+                        More Details
+                    </button>
+                </div>
+            </div>
+                    <!-- CoLiv Project - THIRD (FEATURED) -->
+            <div class="project-card" style="animation-delay: 0.3s;">
                 <div class="featured-badge">Featured</div>
                 <div class="project-image">
                     <img src="images/Coliv.png" alt="CoLiv Platform Screenshot" onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=\'project-placeholder\'>CoLiv</div>'">
@@ -554,7 +601,7 @@
                         </div>
                     </div>
             <!-- BrieflyGlobal Project - FIRST -->
-            <div class="project-card" style="animation-delay: 0.3s;">
+            <div class="project-card" style="animation-delay: 0.4s;">
                 <div class="featured-badge">Featured</div>
                 <div class="project-image">
                     <img src="images/Briefly1.png" alt="BrieflyGlobal Project Screenshot">
@@ -588,7 +635,7 @@
             </div>
 
             <!-- DietRx Enhanced Project - SECOND -->
-            <div class="project-card" style="animation-delay: 0.4s;">
+            <div class="project-card" style="animation-delay: 0.5s;">
                 <div class="project-image">
                     <img src="images/Diet.png" alt="DietRx Project Screenshot">
                 </div>
@@ -731,6 +778,61 @@
                 <span class="tech-tag">AWS S3</span>
                 <span class="tech-tag">JWT</span>
                 <span class="tech-tag">Framer Motion</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- NutritionScanner Modal -->
+    <div class="modal" id="modal-nutritionscanner">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h3>NutritionScanner - Technical Deep Dive</h3>
+            <p><strong>Try it:</strong> <a href="https://nutritionscanner-production.up.railway.app/" target="_blank" rel="noopener noreferrer" style="color: #64ffda;">nutritionscanner-production.up.railway.app</a> &mdash; no signup required. The sign-in screen has a "Look around the demo" button that opens a real account with real receipts in it.</p>
+
+            <p><strong>Challenge:</strong> Nutrition tracking apps depend on manual logging, which people abandon within weeks, and frame everything as restriction &mdash; calories, deficits, targets. Grocery receipts are a passive data source that requires no logging discipline, but they're written in a compressed dialect no database indexes: <em>GG ORG BAN 6CT</em> is six organic bananas. An LLM will resolve that line confidently whether or not it's right, and a nutrition total assembled from confident guesses is worse than no total at all.</p>
+
+            <p><strong>Solution:</strong> Built a five-stage replayable pipeline that transcribes receipts with Claude vision, resolves cryptic line items against USDA FoodData Central through a separately-evaluated LLM pass, and reports what a week's groceries contain and what each nutrient costs &mdash; surfacing every unresolved line for correction rather than filling the gap with a guess.</p>
+
+            <p><strong>System Architecture:</strong></p>
+            <p>• <strong>Replayable Pipeline:</strong> Five stages &mdash; extract &rarr; normalise &rarr; reconcile &rarr; resolve &rarr; derive. Raw extraction JSON is persisted permanently, so every downstream stage can be re-run against a revised prompt or a corrected mapping without re-photographing or paying for vision a second time. Ingestion is idempotent on image hash; re-uploading updates rather than duplicates<br>
+            • <strong>Measured Resolver:</strong> The one component that can be confidently wrong gets a held-out labeled test set and a tracked accuracy number. The eval harness shipped alongside the resolver, not after it &mdash; resolution accuracy is a measured figure, not an assumption<br>
+            • <strong>Arithmetic Reconciliation:</strong> Line items are summed against the receipt's printed subtotal, tax, and total. A basket that doesn't reconcile is flagged suspect with a specific reason and never silently persisted as clean<br>
+            • <strong>Compounding Correction Loop:</strong> Every user fix is stored as a permanent mapping and applied to all future receipts. Correcting <em>GG ORG BAN</em> once means it resolves correctly forever &mdash; this is the core product loop, not a settings screen<br>
+            • <strong>Two-Tier Spend Guards:</strong> A global monthly ceiling caps total API spend; a per-account receipt quota caps any one account's share of it. Without the second, the first is first-come-first-served &mdash; one enthusiastic visitor exhausts the budget and locks out everyone including the owner. Every LLM call logs model, tokens, latency, and cost<br>
+            • <strong>Barcode Rating Engine:</strong> Open Food Facts lookup by barcode with per-ingredient hazard classification sourced to IARC and EFSA, scoped and quoted so a contested classification is shown as contested rather than asserted<br>
+            • <strong>Multi-Account Isolation:</strong> Private data is scoped by user_id; food, product, and store rows are a shared reference cache. An owner role gates the destructive reference-data operations &mdash; merging duplicate foods, overriding a USDA match &mdash; so one account can't reshape the catalogue for everyone</p>
+
+            <p><strong>User Workflow:</strong></p>
+            <p><strong>Capture:</strong><br>
+            1. Photograph one receipt a week &mdash; live camera on mobile, file picker on desktop<br>
+            2. Pipeline extracts, normalises units, reconciles totals, and resolves lines to foods<br>
+            3. Coverage is reported in the headline &mdash; a basket where 60% of lines matched says so prominently</p>
+
+            <p><strong>Correction:</strong><br>
+            1. Unresolved and low-confidence lines are surfaced in a phone-shaped, keyboard-free correction flow<br>
+            2. Ambiguous quantities prompt for the unit the label actually prints, not a normalised one<br>
+            3. Each fix is stored permanently and applied to every future receipt</p>
+
+            <p><strong>Analysis:</strong><br>
+            1. Weekly nutrient totals with per-nutrient adequacy against goals<br>
+            2. Cost-per-nutrient breakdown &mdash; what a gram of protein actually costs across a shop<br>
+            3. Spending organised by line item rather than by receipt<br>
+            4. Barcode scanning for per-product ingredient ratings and organic classification<br>
+            5. CSV export with a tested restore path</p>
+
+            <p><strong>Key Differentiator:</strong> Unlike nutrition apps that require daily logging and frame results as intake and restriction, NutritionScanner reports <em>supply</em> &mdash; what was bought, never what was eaten &mdash; because a receipt cannot know consumption, and copy implying otherwise is treated as a bug rather than a wording preference. It never fabricates a value to complete a total: unresolved items are surfaced for correction, uncertainty is stated in the headline rather than a footnote, and a visibly incomplete number is treated as correct where a fabricated complete one is not.</p>
+
+            <div class="tech-stack">
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">TypeScript</span>
+                <span class="tech-tag">FastAPI</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">Claude API</span>
+                <span class="tech-tag">USDA FoodData Central</span>
+                <span class="tech-tag">Alembic</span>
+                <span class="tech-tag">Redis</span>
+                <span class="tech-tag">Docker</span>
+                <span class="tech-tag">Tailwind</span>
             </div>
         </div>
     </div>
