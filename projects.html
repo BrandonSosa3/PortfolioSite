@@ -507,7 +507,7 @@
                     <h3 class="project-title">Regulist</h3>
                     <p class="project-subtitle">B2B Freelance Marketplace Platform</p>
                     <p class="project-description">
-                        A full-stack B2B marketplace with dual buyer/seller portals, a tiered Stripe Connect payout system, and a contract engine supporting one-time, installment, and milestone payment schedules — each with mutual signing workflows, automated billing jobs, and an admin portal with TOTP MFA.
+                        A full-stack B2B marketplace built single-handedly, with dual buyer/seller portals, a tiered Stripe Connect payout system, and a contract engine supporting one-time, installment, and milestone payment schedules — each with mutual signing workflows, automated billing jobs, and an admin portal with TOTP MFA. Now in launch phase with 20 agencies and 75 businesses on the pre-launch waitlist.
                     </p>
                     <div class="tech-stack">
                         <span class="tech-tag">React</span>
@@ -573,6 +573,7 @@
                         A full-stack pipeline that turns a photographed grocery receipt into structured food and price data, pairing Claude vision extraction with a held-out-evaluated LLM resolver, USDA nutrition lookup, and barcode-level ingredient hazard ratings &mdash; with a permanent correction loop that compounds across receipts, arithmetic reconciliation that flags any basket whose lines don't sum to its printed total, and two-tier spend guards that keep an open-signup deployment from draining a shared API budget.
                     </p>
                     <div class="tech-stack">
+                        <span class="tech-tag">Python</span>
                         <span class="tech-tag">React</span>
                         <span class="tech-tag">TypeScript</span>
                         <span class="tech-tag">FastAPI</span>
@@ -605,16 +606,16 @@
                     <h3 class="project-title">CoLiv</h3>
                     <p class="project-subtitle">Co-Living Property Management Platform</p>
                     <p class="project-description">
-                        A comprehensive dual-portal system for co-living operators and tenants, featuring room-level management with individual pricing, tenant profiles, and an AI-powered roommate matching algorithm. Tracks properties, units, and rooms with full operational visibility.
+                        A comprehensive dual-portal system for co-living operators and tenants, featuring room-level management with individual pricing, tenant profiles, and a roommate matching system built on tenant preference data and a scikit-learn compatibility algorithm. Models concurrent leases and staggered end dates within a single unit, tracking properties, units, and rooms with full operational visibility.
                     </p>
                     <div class="tech-stack">
-                        <span class="tech-tag">AI/ML</span>
-                        <span class="tech-tag">Full stack</span>
-                        <span class="tech-tag">PostgreSQL</span>
                         <span class="tech-tag">Python</span>
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">PostgreSQL</span>
                         <span class="tech-tag">React</span>
                         <span class="tech-tag">TypeScript</span>
-                        <span class="tech-tag">Next.js</span>
+                        <span class="tech-tag">scikit-learn</span>
+                        <span class="tech-tag">Docker</span>
                     </div>
                     </div>
                         <div class="project-actions">
@@ -772,6 +773,8 @@
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()">&times;</button>
             <h3>Regulist - Technical Deep Dive</h3>
+            <p><strong>Role:</strong> Co-Founder &amp; Sole Engineer &mdash; built the entire two-sided marketplace single-handedly. Now in launch phase with 20 agencies and 75 businesses on the pre-launch waitlist.</p>
+
             <p><strong>Challenge:</strong> Freelance marketplaces typically handle simple one-off payments, but professional service contracts require multi-party signing workflows, flexible payment structures, and enforceable cancellation logic — all without exposing clients to payment processing complexity.</p>
 
             <p><strong>Solution:</strong> Built a full-stack B2B marketplace with dual buyer/seller portals, a tiered Stripe Connect payout system, and a contract engine supporting three payment schedule types (one-time, installments, milestones) with mutual cancellation and modification flows.</p>
@@ -781,7 +784,9 @@
             • <strong>Contract Engine:</strong> Three-schedule payment system with per-payment Stripe PaymentIntents, idempotency keys, and status state machines (pending → signed → paid → cancelled)<br>
             • <strong>Tiered Platform Fee:</strong> Fee rate locked at contract signing time (Free 12% → Elite 6%), stored in the contract record so rate changes never affect active agreements<br>
             • <strong>APScheduler Jobs:</strong> Automated installment charging, 48-hour advance payment reminders, and overdue milestone alerts — all idempotent with per-row notification flags to prevent duplicate sends<br>
-            • <strong>Admin Portal:</strong> Full audit trail, seller verification queue, manual credit adjustment, analytics, and TOTP-based MFA</p>
+            • <strong>Admin Portal:</strong> Full audit trail, seller verification queue, manual credit adjustment, analytics, and TOTP-based MFA<br>
+            • <strong>Subscription Billing:</strong> Stripe Connect subscriptions with proration logic &mdash; immediate mid-cycle upgrades, end-of-period downgrades &mdash; plus webhook-driven handling of downgrades, cancellations, and failed payments<br>
+            • <strong>Production Hardening:</strong> JWT refresh-token auth, API rate limiting, password strength validation, AWS S3 document storage with filename sanitization, and a compliant account-deletion flow that preserves executed contracts for legal retention</p>
 
             <p><strong>User Workflow:</strong></p>
             <p><strong>Seller Side:</strong><br>

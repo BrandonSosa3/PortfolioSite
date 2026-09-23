@@ -360,6 +360,20 @@
             border-color: rgba(251, 191, 36, 0.55);
         }
 
+        .work-badge-past {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(148, 163, 184, 0.15);
+            color: #94a3b8;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            padding: 0.35rem 0.9rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
         .work-badge-current {
             position: absolute;
             top: 1.5rem;
@@ -589,6 +603,38 @@
             <div class="work-experience-card">
                 <div class="work-badge-current">Current</div>
                 <div class="work-header">
+                    <div class="work-logo">CR</div>
+                    <div class="work-info">
+                        <h3 class="work-title">Co-Founder &amp; Software Engineer</h3>
+                        <p class="work-company">CampusRun</p>
+                        <div class="work-meta">
+                            <span class="work-date">June 2026 – Present</span>
+                            <span class="work-separator">·</span>
+                            <span class="work-location">San Diego, California</span>
+                        </div>
+                    </div>
+                </div>
+                <ul class="work-bullets">
+                    <li>Sole engineer on a four-person startup, owning the entire production stack — architecture, database design, backend, admin frontend, authentication, CI/CD, and DNS — across 20 API routes, 13 PostgreSQL tables over 8 migrations, and 60 passing unit tests</li>
+                    <li>Built the platform behind three brand activations on five-figure client contracts, delivering post-campaign reports with coupon redemption and engagement analytics to brand partners</li>
+                    <li>Implemented Apple's PassKit Web Service protocol end to end: dynamic per-card pass generation with cryptographic signing, authenticated device callback endpoints using constant-time token comparison, and a five-stage attribution funnel (tap → wallet add → link click → in-store redemption) on an append-only event store</li>
+                    <li>Engineered the capture path for hostile field conditions — offline-resilient retry queue, telemetry moved off the critical response path so a database failure never costs a user their coupon, and idempotent pass issuance via HMAC-derived tokens. Designed for 1,000–3,000 taps in a 3–4 hour window</li>
+                    <li>Caught a client-facing reporting defect that could show conversion rates above 100% (Android users redeem without ever adding a wallet pass) and re-based every rate on distinct people reached; separately eliminated an open-redirect vector by resolving all destinations server-side</li>
+                </ul>
+                <div class="work-skills">
+                    <span class="work-skill-tag">Next.js</span>
+                    <span class="work-skill-tag">React</span>
+                    <span class="work-skill-tag">PostgreSQL</span>
+                    <span class="work-skill-tag">Apple PassKit</span>
+                    <span class="work-skill-tag">Authentication</span>
+                    <span class="work-skill-tag">CI/CD</span>
+                    <span class="work-skill-tag">Vercel</span>
+                </div>
+            </div>
+
+            <div class="work-experience-card">
+                <div class="work-badge-past">Completed</div>
+                <div class="work-header">
                     <div class="work-logo">OCM</div>
                     <div class="work-info">
                         <h3 class="work-title">Wealth and Portfolio Management Intern</h3>
@@ -612,6 +658,63 @@
                     <span class="work-skill-tag">Portfolio Management</span>
                     <span class="work-skill-tag">Data Analysis</span>
                     <span class="work-skill-tag">Excel / VBA</span>
+                </div>
+            </div>
+
+            <div class="work-experience-card">
+                <div class="work-badge-current">Current</div>
+                <div class="work-header">
+                    <div class="work-logo">RG</div>
+                    <div class="work-info">
+                        <h3 class="work-title">Co-Founder &amp; Sole Engineer</h3>
+                        <p class="work-company">Regulist</p>
+                        <div class="work-meta">
+                            <span class="work-date">February 2026 – Present</span>
+                            <span class="work-separator">·</span>
+                            <span class="work-location">San Diego, California</span>
+                        </div>
+                    </div>
+                </div>
+                <ul class="work-bullets">
+                    <li>Built an entire two-sided B2B marketplace single-handedly — proposals, messaging, contract generation with digital signing, and payments — now in launch phase with 20 agencies and 75 businesses on the pre-launch waitlist</li>
+                    <li>Implemented Stripe Connect subscription billing with proration logic for immediate mid-cycle upgrades and end-of-period downgrades, plus webhook-driven handling of downgrades, cancellations, and failed payments</li>
+                    <li>Hardened the platform for production: JWT refresh-token auth, API rate limiting, password strength validation, AWS S3 document storage with filename sanitization, and a compliant account-deletion flow preserving executed contracts for legal retention</li>
+                </ul>
+                <div class="work-skills">
+                    <span class="work-skill-tag">React</span>
+                    <span class="work-skill-tag">TypeScript</span>
+                    <span class="work-skill-tag">FastAPI</span>
+                    <span class="work-skill-tag">PostgreSQL</span>
+                    <span class="work-skill-tag">Stripe Connect</span>
+                    <span class="work-skill-tag">AWS S3</span>
+                    <span class="work-skill-tag">JWT</span>
+                </div>
+            </div>
+
+            <div class="work-experience-card">
+                <div class="work-badge-current">Current</div>
+                <div class="work-header">
+                    <div class="work-logo">AI</div>
+                    <div class="work-info">
+                        <h3 class="work-title">Undergraduate Researcher</h3>
+                        <p class="work-company">AI4Business Lab · San Diego State University</p>
+                        <div class="work-meta">
+                            <span class="work-date">September 2025 – Present</span>
+                            <span class="work-separator">·</span>
+                            <span class="work-location">San Diego, California</span>
+                        </div>
+                    </div>
+                </div>
+                <ul class="work-bullets">
+                    <li>Conduct applied research across AI, data mining, and business analytics, training models on NVIDIA GPU infrastructure and analyzing real-world public health, finance, and operations datasets with machine learning and NLP methods</li>
+                </ul>
+                <div class="work-skills">
+                    <span class="work-skill-tag">Machine Learning</span>
+                    <span class="work-skill-tag">NLP</span>
+                    <span class="work-skill-tag">Data Mining</span>
+                    <span class="work-skill-tag">NVIDIA GPU</span>
+                    <span class="work-skill-tag">Python</span>
+                    <span class="work-skill-tag">Business Analytics</span>
                 </div>
             </div>
         </section>
