@@ -539,11 +539,15 @@
                     <h3 class="project-title">Campus Run</h3>
                     <p class="project-subtitle">Attribution Platform for Live Brand Activations</p>
                     <p class="project-description">
-                        Co-founded venture and the platform behind it &mdash; measured brand activations on college campuses, where a per-event code ties each physical moment (a sampling table, a giveaway, a booth) to what it actually drove. One-step opt-in from the attendee's own phone builds a consent-first list the brand owns, while signups and top-performing spots stream to a live dashboard during the event and resolve into real conversion numbers in the days after.
+                        Sole engineer on a four-person startup, owning the entire production stack behind measured brand activations on college campuses. Implements Apple's PassKit Web Service protocol end to end &mdash; cryptographically signed per-card wallet passes, authenticated device callbacks, and a five-stage attribution funnel on an append-only event store &mdash; so a tap at a physical table traces through to an in-store redemption. Built for hostile field conditions at 1,000&ndash;3,000 taps in a 3&ndash;4 hour window, and shipped across three brand activations on five-figure client contracts.
                     </p>
                     <div class="tech-stack">
                         <span class="tech-tag">Next.js</span>
                         <span class="tech-tag">React</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Apple PassKit</span>
+                        <span class="tech-tag">HMAC</span>
+                        <span class="tech-tag">CI/CD</span>
                         <span class="tech-tag">Vercel</span>
                     </div>
                 </div>
@@ -814,34 +818,41 @@
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()">&times;</button>
             <h3>Campus Run - Technical Deep Dive</h3>
-            <p><strong>Role:</strong> Co-founder and engineering lead &mdash; I build and own the platform; the venture is a team effort.</p>
+            <p><strong>Role:</strong> Co-Founder &amp; Software Engineer &mdash; sole engineer on a four-person startup, owning the entire production stack: architecture, database design, backend, admin interface, authentication, CI/CD, and DNS. 20 API routes, 13 PostgreSQL tables across 8 migrations, 60 passing unit tests.</p>
 
-            <p><strong>Challenge:</strong> A brand that sponsors a campus activation &mdash; a sampling table on Bruinwalk, a giveaway at a chapter event &mdash; spends real money on product and staffing and gets back an anecdote. Nobody can say which table, which hour, or which campus actually produced a customer. The standard capture tools make it worse: a paper signup card is a transcription problem, and a QR pointed at a generic form drops most of the people who scan it and tells you nothing about where they scanned.</p>
+            <p><strong>Challenge:</strong> A brand that sponsors a campus activation &mdash; a sampling table, a giveaway, a booth &mdash; spends real money on product and staffing and gets back an anecdote. Nobody can say which table, which hour, or which campus produced a customer. The standard capture tools make it worse: a paper signup card is a transcription problem, and a QR pointed at a generic form drops most of the people who touch it and still cannot connect them to a purchase. The hard part isn't the landing page; it's carrying identity across the gap between a physical moment outdoors and a redemption in a store days later.</p>
 
-            <p><strong>Solution:</strong> Built the attribution layer that makes a physical moment measurable. Every touchpoint carries a code unique to that event, so a scan at a specific table at a specific hour stays attached to whatever that person does in the days after. Attendees opt in from their own phone in a single step, signups and top-performing spots stream to a dashboard while the event is still running, and the activation resolves afterward into conversion numbers rather than a recap.</p>
+            <p><strong>Solution:</strong> Built the attribution layer that closes that gap, implementing Apple's PassKit Web Service protocol end to end. A tap issues a cryptographically signed wallet pass unique to that person and that event, and the pass stays on their phone as the identity carrier &mdash; through the wallet add, through the link click, through to in-store redemption. The result is a five-stage funnel recorded on an append-only event store, delivered to brand partners as post-campaign reports with coupon redemption and engagement analytics.</p>
 
             <p><strong>System Architecture:</strong></p>
-            <p>• <strong>Per-Event Code as the Attribution Primitive:</strong> Each activation issues its own code rather than sharing one campaign link. That is what makes the unit of measurement a moment &mdash; this table, this hour, this campus &mdash; instead of a channel, and it is the difference between "the UCLA activation worked" and "Bruinwalk at 11am worked"<br>
-            • <strong>Single-Step Opt-In:</strong> Capture happens on the attendee's own phone in one step, at the moment they are actually engaged. Every field added between the scan and the opt-in costs conversions, so the flow is built around removing them<br>
-            • <strong>Live Event Dashboard:</strong> Signups, question responses, and best-performing locations stream during the event, so staffing can move to the spot that is working while there is still time to act on it<br>
-            • <strong>Post-Event Attribution:</strong> The per-event code resolves downstream conversions back to the physical moment that produced them, which is the part no other activation vendor hands over<br>
-            • <strong>Consent-First List Ownership:</strong> Every contact joined by their own hand, and the list belongs to the brand. Beyond the compliance argument, an opted-in list measurably outperforms a scraped or rented one on deliverability<br>
-            • <strong>Admin Console:</strong> Separate authenticated surface for provisioning events, issuing codes, and reviewing campaign performance across activations<br>
-            • <strong>Optional A/B Testing:</strong> Opt-in questions support a split test, so an activation can measure messaging alongside placement</p>
+            <p>• <strong>PassKit Web Service, End to End:</strong> Dynamic per-card pass generation with cryptographic signing, plus authenticated device callback endpoints using constant-time token comparison &mdash; so registration and update callbacks from Apple's servers can't be forged, and token checks don't leak via timing<br>
+            • <strong>Five-Stage Attribution Funnel:</strong> tap &rarr; wallet add &rarr; link click &rarr; in-store redemption, recorded on an append-only event store. Append-only matters: stages are observed facts that never get rewritten, so a report can be recomputed from history rather than trusted as a running tally<br>
+            • <strong>Hostile-Conditions Capture Path:</strong> The capture flow runs outdoors on strangers' phones with unreliable connectivity. An offline-resilient retry queue absorbs dropped requests, and telemetry is moved off the critical response path so a database failure costs an analytics row, never a user their coupon<br>
+            • <strong>Idempotent Pass Issuance:</strong> Pass issuance is keyed on HMAC-derived tokens, so a retry, a double-tap, or a queued request replayed after a reconnect yields the same pass instead of a duplicate &mdash; the property that makes the retry queue safe to have<br>
+            • <strong>Designed for Burst Load:</strong> Built for 1,000&ndash;3,000 taps inside a 3&ndash;4 hour activation window, where the traffic is a spike against a hard deadline rather than a steady curve, and a failure during the window can't be retried later<br>
+            • <strong>Full Stack Ownership:</strong> 20 API routes and 13 PostgreSQL tables across 8 migrations, with authentication, an admin interface, CI/CD, and DNS all owned by one engineer and covered by 60 passing unit tests</p>
+
+            <p><strong>Correctness &amp; Security Work:</strong></p>
+            <p>• <strong>Caught a client-facing reporting defect</strong> that could report conversion rates above 100%. Android users redeem without ever adding a wallet pass, so a rate based on passes issued had a denominator that undercounted the people actually reached. Re-based every rate on distinct people reached &mdash; a defect worth finding precisely because the number was going into reports handed to paying clients<br>
+            • <strong>Eliminated an open-redirect vector</strong> by resolving all destinations server-side rather than trusting a client-supplied target &mdash; the relevant class of bug for a product whose entire surface is short links handed to strangers</p>
 
             <p><strong>User Workflow:</strong></p>
-            <p><strong>1. Capture:</strong> A touchpoint at any table, booth, or handout gets someone onto the list from their own phone in one step<br>
-            <strong>2. Opt In:</strong> They join and answer a question or two, with a quick A/B test if the brand wants one<br>
-            <strong>3. Watch Live:</strong> Signups, answers, and the best-performing spots stream to a dashboard during the event<br>
-            <strong>4. Attribute:</strong> The per-event code shows what the moment drove in the days after, in real numbers</p>
+            <p><strong>1. Capture:</strong> A tap at any table, booth, or handout issues a signed wallet pass to the attendee's own phone in one step<br>
+            <strong>2. Opt In:</strong> They join the list and answer a question or two, with an optional A/B test on messaging<br>
+            <strong>3. Watch Live:</strong> Signups, answers, and best-performing spots stream to a dashboard during the event, so staffing can move to what's working<br>
+            <strong>4. Attribute:</strong> The funnel resolves taps through to in-store redemptions, and brand partners receive post-campaign reports with redemption and engagement analytics</p>
 
-            <p><strong>Good Company:</strong> A format built on the platform &mdash; a brand sponsors a lunch, a sorority chapter brings the turnout, and a local retirement home fills with students for an afternoon. The chapter gets volunteer and fundraising hours, the residents get company, and the brand gets its product into the hands of exact-fit customers attached to something genuinely worth doing. The same attribution layer reports who came, who opted in, and what it drove.</p>
+            <p><strong>Good Company:</strong> A format built on the platform &mdash; a brand sponsors a lunch, a sorority chapter brings the turnout, and a local retirement home fills with students for an afternoon. The chapter gets volunteer and fundraising hours, the residents get company, and the brand puts product into the hands of exact-fit customers attached to something genuinely worth doing. The same attribution layer reports who came, who opted in, and what it drove.</p>
 
-            <p><strong>Key Differentiator:</strong> The activation is the surface; the attribution underneath is the product. Agencies sell the event and report impressions &mdash; a number that cannot be tied to a person or a purchase. Campus Run ties each physical moment to a measured outcome, and because one team builds the software and staffs the event, the data layer and the people handing out product are never two vendors pointing at each other when the numbers come back thin.</p>
+            <p><strong>Key Differentiator:</strong> The activation is the surface; the attribution underneath is the product. Agencies sell the event and report impressions &mdash; a number that cannot be tied to a person or a purchase. Campus Run carries a signed identity from a tap outdoors through to a redemption in a store, and because one team builds the software and staffs the event, the data layer and the people handing out product are never two vendors pointing at each other when the numbers come back thin. Shipped across three brand activations on five-figure client contracts.</p>
 
             <div class="tech-stack">
                 <span class="tech-tag">Next.js</span>
                 <span class="tech-tag">React</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">Apple PassKit</span>
+                <span class="tech-tag">HMAC</span>
+                <span class="tech-tag">CI/CD</span>
                 <span class="tech-tag">Vercel</span>
             </div>
         </div>
